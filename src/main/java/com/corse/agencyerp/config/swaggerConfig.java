@@ -22,7 +22,7 @@ public class swaggerConfig {
                 .enable(true)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.bycdao.cloud"))
+                .apis(RequestHandlerSelectors.basePackage("com.corse.agencyerp"))
                 .paths(PathSelectors.any())
                 .build();
     }
@@ -32,7 +32,7 @@ public class swaggerConfig {
                 .title("swagger-bootstrap-ui RESTful APIs")
                 .description("swagger-bootstrap-ui")
                 .termsOfServiceUrl("http://localhost:8080/")
-                .contact(new Contact("crose@crose.com","agencyErp.co",""))
+                .contact(new Contact("crose@crose.com","agencyErp.com",""))
                 .version("1.0")
                 .build();
     }
