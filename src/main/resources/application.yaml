@@ -1,0 +1,4 @@
+spring:
+  datasource:
+    url: jdbc:sqlite:D:/java_project/agencyERP/src/main/resources/data/data.db
+    driver-class-name: org.sqlite.JDBC
