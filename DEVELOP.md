@@ -8,14 +8,14 @@ restFul 前后端分离
 - 表结构(工有字段：id,uuid,createTm,updateTm,del)
     - 组织表（dept)
         - name
-        - superId（上线部门id)
+        - superUuid（上线部门id)
         - closed (是否关闭)
         - json
     - 员工表（employee)
         - name
         - level
         - status(正式，离职，请假，试用)
-        - deptId(归属部门)
+        - deptUuid(归属部门)
         - json
     - 资源表(resource)
     - 客源表(customer)

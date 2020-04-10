@@ -8,32 +8,49 @@ import javax.persistence.Id
 import javax.persistence.Table
 
 
-abstract class baseDomain{
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id;
+abstract class BaseDomain{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
 
-        private String uuid;
+    String uuid;
 
-        private Date createTm;
+    Date createTm;
 
-        private Date updateTm;
+    Date updateTm;
 
-        private Boolean del;
+    Boolean del;
 }
 
 
 @CompileStatic
 @Table(name = 'dept')
-class deptDomain extends baseDomain{
+class DeptDomain extends BaseDomain{
 
-    private String name;
+    String name;
 
-    private String superUuid;
+    String superUuid;
 
-    private int closed;
+    Integer closed;
 
-    private String json;
+    String json;
+}
+
+@CompileStatic
+@Table(name = 'employee')
+class EmployeeDomain extends BaseDomain{
+
+    String name;
+
+    //等级
+    Integer level;
+
+    //在职状态,0正式,1:试用,2:请假 3:离职
+    Integer status;
+
+    String deptUuid;
+
+    String json;
 }
 
 
