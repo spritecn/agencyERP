@@ -18,13 +18,15 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class swaggerConfig {
     @Bean
     public Docket createRestApi() {
-        return new Docket(DocumentationType.SWAGGER_2)
+        Docket docket = new Docket(DocumentationType.SWAGGER_2)
                 .enable(true)
                 .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.corse.agencyerp"))
                 .paths(PathSelectors.any())
                 .build();
+        docket.ignoredParameterTypes(groovy.lang.MetaClass.class);
+        return docket;
     }
 
     private ApiInfo apiInfo() {

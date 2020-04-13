@@ -2,3 +2,13 @@ spring:
   datasource:
     url: jdbc:sqlite:src/main/resources/data/data.db
     driver-class-name: org.sqlite.JDBC
+  cache:
+    type: ehcache
+mybatis:
+  configuration:
+    cache-enabled: false #关闭mybatis自带缓存
+    map-underscore-to-camel-case: true
+
+mapper:
+  mappers:  com.corse.agencyerp.config.TkBaseMapper
+  style:  normal

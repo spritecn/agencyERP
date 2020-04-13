@@ -1,11 +1,26 @@
 package com.corse.agencyerp.dao
 
-import org.springframework.stereotype.Service
+import com.corse.agencyerp.dao.Domain.BaseDomain
+import com.corse.agencyerp.dao.Domain.DeptDomain
+import com.corse.agencyerp.dao.Domain.EmployeeDomain
+import groovy.transform.CompileStatic
 
 
-@Service
-interface DeptDao {
-    public DeptDomain  getDeptByUuid(String uuid)
-    public List<DeptDomain> listDeptByDeptDomain(DeptDomain domain)
-    public Integer saveDept(DeptDomain domain);
+@CompileStatic
+abstract interface BaseDao<T extends BaseDomain>{
+    T  getDomainByUuid(String uuid)
+    List<T> listDomain(T domain)
+    Integer save(T domain);
+    Integer update(T domain)
+    Integer removeByUuid(String  uuid)
 }
+
+
+@CompileStatic
+interface DeptDao extends BaseDao<DeptDomain>{
+}
+
+@CompileStatic
+interface EmployeeDao extends BaseDao<EmployeeDomain>{
+}
+
