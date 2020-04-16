@@ -22,8 +22,8 @@ class BaseDaoImpl<Mapper extends TkBaseMapper,Domain extends BaseDomain> {
     }
 
     Integer save(Domain domain) {
-        domain.uuid ?= UuidUtil.genSortUuid()
-        domain.createTm ?= new Date()
+        domain.uuid = domain.uuid?: UuidUtil.genSortUuid()
+        domain.createTm = domain.createTm?: new Date()
         mapper.insertSelective(domain)
     }
 
@@ -31,7 +31,7 @@ class BaseDaoImpl<Mapper extends TkBaseMapper,Domain extends BaseDomain> {
         if(domain.uuid){
             return null
         }
-        domain.updateTm ?= new Date()
+        domain.updateTm  = domain.updateTm ?: new Date()
         Example ex = new Example(d.getClass())
         ex.createCriteria().andEqualTo("uuid",domain.uuid)
         mapper.updateByExampleSelective(domain,ex)

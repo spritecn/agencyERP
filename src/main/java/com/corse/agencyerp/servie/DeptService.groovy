@@ -9,12 +9,16 @@ import com.corse.agencyerp.utils.UuidUtil
 import groovy.transform.CompileStatic
 import org.springframework.beans.BeanUtils
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.cache.annotation.CacheEvict
+import org.springframework.cache.annotation.CachePut
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 
 
 interface  DeptService{
-    BaseResponse<String> createDept(CreateDeptVo vo);
-    BaseResponse<List<DeptDTO>> listDept(DeptDTO dto);
+    String createDept(CreateDeptVo vo)
+    List<DeptDTO> listDept(DeptDTO dto)
+    List<DeptDTO> listAllDept()
 }
 
 @CompileStatic
@@ -22,8 +26,8 @@ interface  DeptService{
 class DeptServiceImpl implements DeptService {
     @Autowired
     private DeptDao deptDao
-
-    BaseResponse<String> createDept(CreateDeptVo vo){
+    @CacheEvict(value = "dept",allEntries = true)
+    String createDept(CreateDeptVo vo){
         //判断重名
         DeptDomain dept = new DeptDomain()
         dept.name = vo.name
@@ -39,18 +43,27 @@ class DeptServiceImpl implements DeptService {
         domain.json = vo.json
         domain.superUuid = vo.superUuid
         deptDao.save(domain)
-        BaseResponse.successReturn(domain.uuid)
+        domain.uuid
     }
 
     @Override
-    BaseResponse<List<DeptDTO>> listDept(DeptDTO dto) {
+    List<DeptDTO> listDept(DeptDTO dto) {
+        dto = dto?:new DeptDTO()
         DeptDomain domain = new DeptDomain()
         BeanUtils.copyProperties(dto,domain)
-        BaseResponse.successReturn(deptDao.listDomain(domain).stream().map({detpDomain2Dto(it)}).collect()) as BaseResponse<List<DeptDTO>>
+        deptDao.listDomain(domain).stream().map({detpDomain2Dto(it)}).collect() as List<DeptDTO>
+    }
+
+    @Override
+    @CacheEvict(value = "dept",key = "{'AllDept'}")
+    List<DeptDTO> listAllDept() {
+        DeptDomain domain = new DeptDomain()
+        deptDao.listDomain(domain).stream().map({detpDomain2Dto(it)}).collect() as List<DeptDTO>
     }
 
     static DeptDTO detpDomain2Dto(DeptDomain domain){
         DeptDTO dto = new DeptDTO()
         BeanUtils.copyProperties(domain, dto)
         return  dto
-    }}
+    }
+}

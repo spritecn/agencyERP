@@ -24,13 +24,19 @@ class DeptController {
     @RequestMapping(value = "/createDept", method = RequestMethod.POST)
     @ApiOperation(value = "创建部门", notes = "创建部门")
     BaseResponse<String> createDept(@RequestBody CreateDeptVo  request){
-        deptService.createDept(request)
+        BaseResponse.successReturn(deptService.createDept(request))
     }
 
     @RequestMapping(value = "/listDept", method = RequestMethod.POST)
     @ApiOperation(value = "查询部门", notes = "查询部门")
     BaseResponse<List<DeptDTO>> listDept(@RequestBody DeptDTO  request){
-        deptService.listDept(request)
+        BaseResponse.successReturn(deptService.listDept(request))
+    }
+
+    @RequestMapping(value = "/listAllDept", method = RequestMethod.POST)
+    @ApiOperation(value = "列出所有部门", notes = "查询部门")
+    BaseResponse<List<DeptDTO>> listDept(){
+        BaseResponse.successReturn(deptService.listAllDept())
     }
 
 }
